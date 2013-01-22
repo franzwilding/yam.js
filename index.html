@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="de">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel='stylesheet' href='css/yam.css' type='text/css' media='all' />
+</head>
+
+<body>
+
+  <ul id="main-menu">
+    <li>
+      <a href="#">Menüpunkt 1</a>
+      <ul>
+        <li><a href="#">Untermenüpunkt 1</a></li>
+        <li><a href="#">Untermenüpunkt 2</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Menüpunkt 2</a></li>
+    <li><a href="#">Menüpunkt 3</a></li>
+    <li>
+      <a href="#">Menüpunkt 4</a>
+      <ul>
+        <li><a href="#">Untermenüpunkt 1</a></li>
+        <li><a href="#">Untermenüpunkt 2</a></li>
+        <li>
+          <a href="#">Untermenüpunkt 3</a>
+          <ul>
+            <li><a href="#">Unter-Untermenüpunkt 1</a></li>
+            <li>
+              <a href="#">Unter-Untermenüpunkt 2</a>
+              <ul>
+                <li><a href="#">Unter-Unter-Untermenüpunkt 1</a></li>
+                <li><a href="#">Unter-Unter-Untermenüpunkt 2</a></li>
+                <li><a href="#">Unter-Unter-Untermenüpunkt 3</a></li>
+                <li><a href="#">Unter-Unter-Untermenüpunkt 4</a></li>
+                <li><a href="#">Unter-Unter-Untermenüpunkt 5</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Unter-Untermenüpunkt 3</a></li>
+            <li><a href="#">Unter-Untermenüpunkt 4</a></li>
+          </ul>
+        </li>
+        <li><a href="#">Untermenüpunkt 4</a></li>
+        <li><a href="#">Untermenüpunkt 5</a></li>
+      </ul>
+    </li>
+    <li><a href="#">Menüpunkt 5</a></li>
+    <li><a href="#">Menüpunkt 6</a></li>
+  </ul>
+
+  <script src="lib/jquery.min.js"></script>
+  <script type="text/javascript" src="lib/jquery.ba-throttle-debounce.min.js"></script>
+  <script type="text/javascript" src="js/yam.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#main-menu").yam({
+        layout_vertical_at: 3,
+        selectors: [
+          ['self', '> li'],
+          ['> ol, > ul', '> li']
+        ]
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+/* line 3, ../src/scss/yam.scss */
+.yam-horizontal, .yam-vertical {
+  position: absolute;
+}
+
+/* line 7, ../src/scss/yam.scss */
+.yam-horizontal {
+  left: 0;
+  right: 0;
+}
+/* line 10, ../src/scss/yam.scss */
+.yam-horizontal .yam-item {
+  display: inline-block;
+}
+
+/* line 15, ../src/scss/yam.scss */
+.yam-vertical {
+  float: left;
+}
+/* line 17, ../src/scss/yam.scss */
+.yam-vertical .yam-item {
+  display: block;
+}
+
+/* line 22, ../src/scss/yam.scss */
+.yam-menu {
+  position: relative;
+  display: block;
+}
+
+/* line 32, ../src/scss/yam.scss */
+#main-menu {
+  background: yellow;
+  border: 1px solid orange;
+  max-width: 960px;
+  margin: 20px auto;
+  text-align: center;
+}
+/* line 39, ../src/scss/yam.scss */
+#main-menu ul, #main-menu ol {
+  background: yellow;
+  border: 1px solid orange;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+/* line 47, ../src/scss/yam.scss */
+#main-menu li {
+  background: #ccc;
+  border: 1px solid #333;
+  padding: 5px 10px;
+}
+/* line 52, ../src/scss/yam.scss */
+#main-menu li.yam-parent {
+  background: white;
+}
+/* line 56, ../src/scss/yam.scss */
+#main-menu li.active {
+  background: green;
+}
