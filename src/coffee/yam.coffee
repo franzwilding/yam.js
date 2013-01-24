@@ -13,6 +13,7 @@
 
   defaults =
     hover_delay: 1000
+    window_min_width: 640
     hover_animations: {
       in: 100
       out: 100
@@ -22,16 +23,23 @@
       ['self', '> li']
       ['> ul, > ol', '> li']
     ]
+    callbacks:
+      mouseenter: undefined
+      mouseleave: undefined
+      click: undefined
+    click_events: 'click, touchend'
+
     is_active: (element)->
       return element.hasClass 'active'
 
   # The actual plugin constructor
-  class YaMWrapper
+  class YamWrapper
 
 
     # wrapper constructor
     constructor: (@element, options) ->
       @options = {}
+      @enabled = true
       @menus = []
       @active = []
       @options = $.extend {}, defaults, options
@@ -44,6 +52,10 @@
 
       # init all Layouts
       @initLayouts()
+
+      # disable, if we are to small
+      if $("body").width() <= that.options.window_min_width && that.enabled
+        that._disable()
 
     initLayouts: ->
 
@@ -67,6 +79,8 @@
 
         items.each (i, item)->
           $(item).addClass 'yam-item'
+
+          that.manageClick $(item)
 
           if that._getLayout(level) == 'vertical'
             $(item).css 'min-width', that._getElementWidth($(item))
@@ -99,17 +113,27 @@
 
       # when resizing the window, we need to manage all active menues heights
       $(window).resize $.debounce(50, ->
+
+        # manage all active menues
         $.each that.active, (l, menu)->
           if menu != undefined
             that.checkHeightForMenu menu
-      )
 
+        # disable all, when we are to small
+        if $("body").width() <= that.options.window_min_width && that.enabled
+          that._disable()
+        else if $("body").width() > that.options.window_min_width && !that.enabled
+          that._enable()
+
+      )
 
     checkHeightForMenu: (element)->
       level = element.data('yam-level')
-      height = @_getElementHeight @menus[level-1][0]
-      if (@_getLayout(level) == 'horizontal')
-        element.css 'top', height
+
+      if level != null
+        height = @_getElementHeight @menus[level-1][0]
+        if (@_getLayout(level) == 'horizontal')
+          element.css 'top', height
 
     # position vertical-menu next to parent menu
     # first we try to add ourself right to the menu, then left
@@ -150,16 +174,58 @@
               element.css 'left', 'auto'
               element.css 'right', 0
 
+    # manage click
+    manageClick: (element)->
+
+      that = @
+
+      if Modernizr.touch
+        element.bind @options.click_events, (event)->
+
+          if !element.hasClass 'yam-active'
+            event.preventDefault()
+
+            data = {
+              obj: that
+              element: element
+            }
+
+            # open menu
+            that._manageMouseEnter element, element.find('.yam-horizontal, .yam-vertical').first()
+
+            # add active class
+            element.addClass "yam-active"
+
+
+            # hide menu on window.click
+            $(window).bind that.options.click_events, data, that.windowClickHandler
+
+
+      # call callback
+      if $.isFunction @options.callbacks.click
+        element.bind that.options.click_events, @options.callbacks.click
+
+    #windowClickHandler
+    windowClickHandler: (event)->
+      if $(event.data.element).closest('.yam-menu')[0] != $(event.target).closest('.yam-menu')[0]
+        that = @
+        setTimeout (->
+          $(event.data.element).removeClass "yam-active"
+          event.data.obj._manageMouseLeave $(event.data.element), $(event.data.obj.element)
+          $(event.data.obj.element).find('.yam-active').removeClass 'yam-active'
+          $(window).unbind event.data.obj.options.click_events, that.windowClickHandler
+        ), 0
+
+
     # manage hover
     manageHover: (element, child)->
-
       that = @
 
       # do not use hover action on active menues, but make sure it is visible
       if $.inArray(child, @active) > 0
         element.mouseenter (event)->
           element.siblings().find('.yam-hover').each (i, e)->
-            that._hide_menu $(e)
+            that._hideMenu $(e)
           child.show()
         return
 
@@ -169,35 +235,68 @@
 
         # stop any posible mouse-leave-timers on this...
         clearTimeout element.data 'yam-mouseleave-timer'
-
-        # ...and hide all siblings
-        element.siblings().find('.yam-hover').each (i, e)->
-            that._hide_menu $(e)
-
-        # and all active menues from this level
-        if that.active[child.data('yam-level')] != undefined
-          that.active[child.data('yam-level')].hide()
-
-        # show this element
-        that._show_menu child, element
+        that._manageMouseEnter element, child
 
       element.mouseleave (event)->
 
         # leave after a short periode
         timer = setTimeout (->
-          that._hide_menu child, element
-
-          # redisplay active menues
-          if that.active[child.data('yam-level')] != undefined
-            that.active[child.data('yam-level')].show()
-
+          that._manageMouseLeave element, child
         ), that.options.hover_delay
 
         element.data 'yam-mouseleave-timer', timer
 
+    # manageMouseEnter
+    _manageMouseEnter: (element, child)->
+      if !@isMenuHover(child)
+
+        that = @
+
+        # ...and hide all siblings
+        element.siblings().find('.yam-hover').each (i, e)->
+            that._hideMenu $(e)
+
+        # and all active menues from this level
+        if @active[child.data('yam-level')] != undefined
+          @active[child.data('yam-level')].hide()
+
+        # show this element
+        @_showMenu child, element
+
+        # callback
+        if $.isFunction @options.callbacks.mouseenter
+          @options.callbacks.mouseenter event, element
+
+
+    # manageMenuLeave
+    _manageMouseLeave: (element, child)->
+
+      @_hideMenu child
+      that = @
+      child.find('.yam-horizontal, .yam-vertical').each (i, e)->
+        that._hideMenu $(e)
+
+      # redisplay active menues
+      if @active[child.data('yam-level')] != undefined
+        @active[child.data('yam-level')].show()
+
+      # callback
+      if $.isFunction @options.callbacks.mouseleave
+        @options.callbacks.mouseleave event, element
+
+    #enable yam
+    _enable: ->
+      @enabled = true
+      $(@element).show()
+
+    #disable yam
+    _disable: ->
+      @enabled = false
+      $(@element).hide()
+
     #show menu
-    _show_menu: (menu, parent)->
-      if !menu.hasClass 'yam-hover'
+    _showMenu: (menu, parent)->
+      if !@isMenuHover(menu)
         @checkHeightForMenu menu, parent
         @positionSubmenu menu, parent
 
@@ -208,8 +307,8 @@
 
         menu.addClass 'yam-hover'
 
-    _hide_menu: (menu, child)->
-      if menu.hasClass 'yam-hover'
+    _hideMenu: (menu)->
+      if @isMenuHover(menu)
 
         if menu.hasClass 'yam-horizontal'
           menu.fadeOut @options.hover_animations.out
@@ -218,6 +317,8 @@
 
         menu.removeClass 'yam-hover'
 
+    isMenuHover: (menu)->
+      menu.hasClass 'yam-hover'
 
     #recursively walk the menu, and call the function for each step
     _walkMenu: (parent, cal_function, level = 0, old_parent)->
@@ -275,7 +376,7 @@
   $.fn[pluginName] = (options) ->
     @each ->
       if !$.data(this, "plugin_#{pluginName}")
-        $.data(@, "plugin_#{pluginName}", new YaMWrapper(@, options))
+        $.data(@, "plugin_#{pluginName}", new YamWrapper(@, options))
 )(jQuery, window)
 
 
