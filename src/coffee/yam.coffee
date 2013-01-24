@@ -73,9 +73,10 @@
 
         that.menus[level].push parent
 
-        if that.options.is_active(old_parent) && that._getLayout(level) == 'horizontal'
-          that.active[level] = parent
-          old_parent.addClass 'yam-active'
+        if that._getLayout(level) == 'horizontal'
+          if that.options.is_active(old_parent)
+            that.active[level] = parent
+            old_parent.addClass 'yam-active'
 
         items.each (i, item)->
           $(item).addClass 'yam-item'
@@ -92,8 +93,15 @@
             old_parent.addClass 'yam-parent'
 
 
+      # this holds all horizontal menues heights, so we can calculate margin-bottom
+      total_menu_height = parseInt($(@element).css('margin-bottom'), 10)
+      $(@element).data 'yam-margin-bottom', total_menu_height
+
       #hide all menues, that shouldn't be visible on start
       $.each @menus, (l, level)->
+
+        level_height = 0
+
         $.each level, (i, e)->
           ignore = false
           if that.active[l] != undefined
@@ -105,6 +113,17 @@
 
           if !ignore
             $(e).hide()
+
+          # get the menu height
+          if e[0] != that.element && e.hasClass 'yam-horizontal'
+            menu_height = that._getElementHeight(e)
+            if menu_height > level_height
+              level_height = menu_height
+
+        total_menu_height = total_menu_height + level_height
+
+      # set the margin-bottom to the menu
+      $(@element).css 'margin-bottom', total_menu_height
 
       # manage all visible menues
       $.each @active, (l, menu)->
@@ -118,6 +137,24 @@
         $.each that.active, (l, menu)->
           if menu != undefined
             that.checkHeightForMenu menu
+
+        # manage menu margin
+        total_menu_height = $(that.element).data 'yam-margin-bottom'
+
+        $.each that.menus, (l, level)->
+          level_height = 0
+          $.each level, (i, e)->
+            # get the menu height
+            if e[0] != that.element && e.hasClass 'yam-horizontal'
+              menu_height = that._getElementHeight(e)
+              if menu_height > level_height
+                level_height = menu_height
+
+          total_menu_height = total_menu_height + level_height
+
+        # set the margin-bottom to the menu
+        $(that.element).css 'margin-bottom', total_menu_height
+
 
         # disable all, when we are to small
         if $("body").width() <= that.options.window_min_width && that.enabled

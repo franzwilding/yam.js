@@ -23,38 +23,3 @@
   position: relative;
   display: block;
 }
-
-
-
-
-
-
-#main-menu {
-  background: yellow;
-  border: 1px solid orange;
-  max-width: 960px;
-  margin: 20px auto;
-  text-align: center;
-
-  ul, ol {
-    background: yellow;
-    border: 1px solid orange;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-  }
-
-  li {
-    background: #ccc;
-    border: 1px solid #333;
-    padding: 30px 30px;
-
-    &.yam-parent {
-      background: white;
-    }
-
-    &.active {
-      background: green;
-    }
-  }
-}
