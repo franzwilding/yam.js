@@ -5,6 +5,13 @@
 
   <script src="lib/modernizr.js"></script>
   <link rel='stylesheet' href='css/yam.css' type='text/css' media='all' />
+
+  <style type="text/css">
+    .yam-hover-parent {
+      background: yellow;
+    }
+  </style>
+
 </head>
 
 <body>
@@ -57,6 +64,7 @@
     $(document).ready(function(){
       $("#main-menu").yam({
         layout_vertical_at: 3,
+        remember_menu_state: true,
         selectors: [
           ['self', '> li'],
           ['> ol, > ul', '> li']

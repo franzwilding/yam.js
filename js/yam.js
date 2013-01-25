@@ -8,6 +8,7 @@
     defaults = {
       hover_delay: 1000,
       window_min_width: 640,
+      remember_menu_state: false,
       hover_animations: {
         "in": 100,
         out: 100
@@ -261,13 +262,15 @@
 
       YamWrapper.prototype._manageMouseLeave = function(element, child) {
         var that;
-        this._hideMenu(child);
         that = this;
         child.find('.yam-horizontal, .yam-vertical').each(function(i, e) {
           return that._hideMenu($(e));
         });
-        if (this.active[child.data('yam-level')] !== void 0) {
-          this.active[child.data('yam-level')].show();
+        if (!this.options.remember_menu_state) {
+          this._hideMenu(child);
+          if (this.active[child.data('yam-level')] !== void 0) {
+            this.active[child.data('yam-level')].show();
+          }
         }
         if ($.isFunction(this.options.callbacks.mouseleave)) {
           return this.options.callbacks.mouseleave(event, element);
@@ -293,6 +296,7 @@
           } else {
             menu.slideDown(this.options.hover_animations["in"]);
           }
+          parent.addClass('yam-hover-parent');
           return menu.addClass('yam-hover');
         }
       };
@@ -304,6 +308,7 @@
           } else {
             menu.slideUp(this.options.hover_animations.out);
           }
+          menu.closest('.yam-hover-parent').removeClass('yam-hover-parent');
           return menu.removeClass('yam-hover');
         }
       };

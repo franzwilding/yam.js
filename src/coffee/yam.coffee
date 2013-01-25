@@ -14,6 +14,7 @@
   defaults =
     hover_delay: 1000
     window_min_width: 640
+    remember_menu_state: false
     hover_animations: {
       in: 100
       out: 100
@@ -308,14 +309,16 @@
     # manageMenuLeave
     _manageMouseLeave: (element, child)->
 
-      @_hideMenu child
       that = @
       child.find('.yam-horizontal, .yam-vertical').each (i, e)->
         that._hideMenu $(e)
 
-      # redisplay active menues
-      if @active[child.data('yam-level')] != undefined
-        @active[child.data('yam-level')].show()
+      if !@options.remember_menu_state
+        @_hideMenu child
+
+        # redisplay active menues
+        if @active[child.data('yam-level')] != undefined
+          @active[child.data('yam-level')].show()
 
       # callback
       if $.isFunction @options.callbacks.mouseleave
@@ -342,6 +345,7 @@
         else
           menu.slideDown @options.hover_animations.in
 
+        parent.addClass 'yam-hover-parent'
         menu.addClass 'yam-hover'
 
     _hideMenu: (menu)->
@@ -352,6 +356,7 @@
         else
           menu.slideUp @options.hover_animations.out
 
+        menu.closest('.yam-hover-parent').removeClass 'yam-hover-parent'
         menu.removeClass 'yam-hover'
 
     isMenuHover: (menu)->
