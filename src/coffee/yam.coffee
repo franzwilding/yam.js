@@ -313,7 +313,7 @@
       child.find('.yam-horizontal, .yam-vertical').each (i, e)->
         that._hideMenu $(e)
 
-      if !@options.remember_menu_state
+      if (!@options.remember_menu_state) || (child.hasClass 'yam-vertical') || (@active[child.data('yam-level')] != undefined)
         @_hideMenu child
 
         # redisplay active menues
@@ -345,7 +345,13 @@
         else
           menu.slideDown @options.hover_animations.in
 
-        parent.addClass 'yam-hover-parent'
+        others = parent.siblings('.yam-active')
+        others.addClass 'yam-inactive'
+        others.removeClass 'yam-active'
+
+        parent.addClass 'yam-active'
+
+
         menu.addClass 'yam-hover'
 
     _hideMenu: (menu)->
@@ -356,7 +362,11 @@
         else
           menu.slideUp @options.hover_animations.out
 
-        menu.closest('.yam-hover-parent').removeClass 'yam-hover-parent'
+        others = menu.closest('.yam-active').siblings('.yam-inactive')
+        others.addClass 'yam-active'
+        others.removeClass 'yam-inactive'
+
+        menu.closest('.yam-active').removeClass 'yam-active'
         menu.removeClass 'yam-hover'
 
     isMenuHover: (menu)->

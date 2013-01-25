@@ -266,7 +266,7 @@
         child.find('.yam-horizontal, .yam-vertical').each(function(i, e) {
           return that._hideMenu($(e));
         });
-        if (!this.options.remember_menu_state) {
+        if ((!this.options.remember_menu_state) || (child.hasClass('yam-vertical')) || (this.active[child.data('yam-level')] !== void 0)) {
           this._hideMenu(child);
           if (this.active[child.data('yam-level')] !== void 0) {
             this.active[child.data('yam-level')].show();
@@ -288,6 +288,7 @@
       };
 
       YamWrapper.prototype._showMenu = function(menu, parent) {
+        var others;
         if (!this.isMenuHover(menu)) {
           this.checkHeightForMenu(menu, parent);
           this.positionSubmenu(menu, parent);
@@ -296,19 +297,26 @@
           } else {
             menu.slideDown(this.options.hover_animations["in"]);
           }
-          parent.addClass('yam-hover-parent');
+          others = parent.siblings('.yam-active');
+          others.addClass('yam-inactive');
+          others.removeClass('yam-active');
+          parent.addClass('yam-active');
           return menu.addClass('yam-hover');
         }
       };
 
       YamWrapper.prototype._hideMenu = function(menu) {
+        var others;
         if (this.isMenuHover(menu)) {
           if (menu.hasClass('yam-horizontal')) {
             menu.fadeOut(this.options.hover_animations.out);
           } else {
             menu.slideUp(this.options.hover_animations.out);
           }
-          menu.closest('.yam-hover-parent').removeClass('yam-hover-parent');
+          others = menu.closest('.yam-active').siblings('.yam-inactive');
+          others.addClass('yam-active');
+          others.removeClass('yam-inactive');
+          menu.closest('.yam-active').removeClass('yam-active');
           return menu.removeClass('yam-hover');
         }
       };
