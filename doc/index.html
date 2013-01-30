@@ -27,6 +27,15 @@
     </header>
 
     <section>
+
+      <article class="center">
+        <p><strong>yam.js</strong> is yet another jquery menu plugin, that manages all kinds of vertical and horizontal menues. You can create as many menu levels as your navigation needs.</p>
+        <p>yam.js can display a menu level in horizontal or vertical mode, so you will be able to create complex navigation structures.</p>
+        <p>Checkout the <a href="#demo">demo</a>, or read on.</p>
+      </article>
+    </section>
+
+    <section>
       <hr />
       <h2>Accessible, responsive dropdown menu</h2>
 
@@ -64,7 +73,7 @@
     </section>
 
 
-    <section style="text-align:center;">
+    <section style="text-align:center;" id="demo">
       <hr />
       <h2>Demo</h2>
 
@@ -271,6 +280,36 @@ $(document.ready(function(){
 }));
           </pre>
         </div>
+
+        <header><h4>This is all you need to include and do</h4></header>
+
+        <div class="content">
+          <pre class="brush: xml">
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/yam.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot; /&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;js/modernizr.js&quot;&gt;&lt;/script&gt;
+  &lt;/head&gt;
+
+  &lt;body&gt;
+
+    &lt;ul id=&quot;menu&quot;&gt;
+      &lt;li&gt;&lt;a href=&quot;&quot;&gt;...&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;script type=&quot;text/javascript&quot; src=&quot;js/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;js/yam.js&quot;&gt;&lt;/script&gt;
+
+    &lt;script type=&quot;text/javascript&quot;&gt;
+      $(document).ready(function(){
+        $(&quot;#menu&quot;).yam();
+      });
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+          </pre>
+        </div>
+
       </article>
 
       <article class="box">
@@ -325,6 +364,57 @@ $(document.ready(function(){
           <p>Set the function to check, if an element is active by default.</p>
 
         </div>
+
+        <header><h4>All classes, yam.js adds to the menu:</h4></header>
+
+        <div class="content">
+
+          <p>In order to make the menu easy to style, yam.js adds the following classes to the menu markup. For better understandig however, you should use your browser's inspector the check out was yam.js does to the DOM.</p>
+
+          <hr />
+
+          <h5>ul.yam-menu</h5>
+
+          <p>Added to every menu.</p>
+
+          <hr />
+
+          <h5>ul.yam-vertical</h5>
+
+          <p>Added to every vertical menu.</p>
+
+          <hr />
+
+          <h5>ul.yam-horizontal</h5>
+
+          <p>Added to every horizontal menu.</p>
+
+          <hr />
+
+          <h5>li.yam-item</h5>
+
+          <p>Added to every list element.</p>
+
+          <hr />
+
+          <h5>li.yam-parent</h5>
+
+          <p>Added to list elements, that include a sub-menu (Perfect for displaying a triangle).</p>
+
+          <hr />
+
+          <h5>li.yam-active</h5>
+
+          <p>Added to a list element while it's submenu is beeing displayed.</p>
+
+          <hr />
+
+          <h5>ul.yam-hover</h5>
+
+          <p>Added to a meun, when it's shown.</p>
+
+        </div>
+
       </article>
 
       <p class="c"></p>

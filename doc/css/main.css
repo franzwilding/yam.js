@@ -106,6 +106,10 @@ article.right {
   padding-left: 50%;
 }
 
+article.center {
+  margin-left: 25%;
+}
+
 aside {
   position: absolute;
   width: 45%;
