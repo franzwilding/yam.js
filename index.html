@@ -7,16 +7,115 @@
   <link rel='stylesheet' href='css/yam.css' type='text/css' media='all' />
 
   <style type="text/css">
-    .yam-hover-parent {
-      background: yellow;
+
+    #menu {
+      border: 1px solid #ddd;
+      box-shadow: 0 0 5px 0 #ddd;
+      background: white;
+      font-size: 1.2em;
     }
+
+    #menu li {
+      border-right: 1px solid #ddd;
+      margin: 0 0 0 -5px;
+    }
+
+    #menu li:first-child {
+      border-left: 1px solid #ddd;
+      margin-left: 0;
+    }
+
+    #menu li a {
+      text-decoration: none;
+      padding: 15px 20px;
+      display: inline-block;
+    }
+
+    #menu li ul {
+      background: #7F9569;
+      margin: -2px 0 0 0;
+      border: none;
+      box-shadow: none;
+      font-size: 0.9em;
+    }
+
+    #menu li ul li {
+      border: none;
+      margin: 0;
+    }
+
+    #menu li ul li:first-child {
+      border: none;
+    }
+
+    #menu li ul li a {
+      color: white;
+      text-decoration: none;
+      padding: 5px 10px;
+    }
+
+    #menu li ul li a:hover {
+      background: none;
+    }
+
+    #menu li ul li.yam-active, #menu li ul li:hover {
+      background: white;
+    }
+
+    #menu li ul li.yam-active a, #menu li ul li:hover a {
+      color: #7F9569;
+    }
+
+    #menu li ul li ul {
+      background: white;
+      border: 1px solid #ddd;
+      border-top: none;
+      margin-left: -1px;
+    }
+
+    #menu li ul li ul li ul {
+      border-top: 1px solid #ddd;
+    }
+
+    #menu li ul li ul li {
+      background: none;
+    }
+
+    #menu li ul li ul li a {
+      color: #7F9569;
+    }
+
+    #menu li ul li ul li.yam-active,
+    #menu li ul li ul li:hover {
+      background: #7F9569;
+    }
+
+    #menu li ul li ul li:hover a,
+    #menu li ul li ul li.yam-active a {
+      color: white;
+    }
+
+    #menu li ul li ul li:hover ul li a,
+    #menu li ul li ul li.yam-active ul li a,
+    #menu li ul li ul li:hover ul li:hover ul li a,
+    #menu li ul li ul li.yam-active ul li.yam-active ul li a {
+      color: #7F9569;
+    }
+
+    #menu li ul li ul li:hover ul li:hover a,
+    #menu li ul li ul li.yam-active ul li.yam-active a,
+    #menu li ul li ul li:hover ul li:hover ul li:hover a,
+    #menu li ul li ul li.yam-active ul li.yam-active ul li.yam-active a {
+      color: white;
+    }
+
   </style>
 
 </head>
 
 <body>
 
-  <ul id="main-menu">
+  <ul id="menu">
     <li>
       <a href="#">Menüpunkt 1</a>
       <ul>
@@ -59,10 +158,10 @@
 
   <script src="lib/jquery.min.js"></script>
   <script type="text/javascript" src="lib/jquery.ba-throttle-debounce.min.js"></script>
-  <script type="text/javascript" src="js/yam.js"></script>
+  <script type="text/javascript" src="src/coffee/yam.js"></script>
   <script type="text/javascript">
     $(document).ready(function(){
-      $("#main-menu").yam({
+      $("#menu").yam({
         layout_vertical_at: 3,
         remember_menu_state: true,
         selectors: [

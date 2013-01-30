@@ -13,7 +13,6 @@
 
   defaults =
     hover_delay: 1000
-    window_min_width: 640
     remember_menu_state: false
     hover_animations: {
       in: 100
@@ -40,7 +39,6 @@
     # wrapper constructor
     constructor: (@element, options) ->
       @options = {}
-      @enabled = true
       @menus = []
       @active = []
       @options = $.extend {}, defaults, options
@@ -53,10 +51,6 @@
 
       # init all Layouts
       @initLayouts()
-
-      # disable, if we are to small
-      if $("body").width() <= that.options.window_min_width && that.enabled
-        that._disable()
 
     initLayouts: ->
 
@@ -155,14 +149,6 @@
 
         # set the margin-bottom to the menu
         $(that.element).css 'margin-bottom', total_menu_height
-
-
-        # disable all, when we are to small
-        if $("body").width() <= that.options.window_min_width && that.enabled
-          that._disable()
-        else if $("body").width() > that.options.window_min_width && !that.enabled
-          that._enable()
-
       )
 
     checkHeightForMenu: (element)->
@@ -324,16 +310,6 @@
       if $.isFunction @options.callbacks.mouseleave
         @options.callbacks.mouseleave event, element
 
-    #enable yam
-    _enable: ->
-      @enabled = true
-      $(@element).show()
-
-    #disable yam
-    _disable: ->
-      @enabled = false
-      $(@element).hide()
-
     #show menu
     _showMenu: (menu, parent)->
       if !@isMenuHover(menu)
@@ -350,12 +326,14 @@
         others.removeClass 'yam-active'
 
         parent.addClass 'yam-active'
-
-
         menu.addClass 'yam-hover'
+
+        @active[@options.layout_vertical_at + menu.data("yam-level")] = menu
 
     _hideMenu: (menu)->
       if @isMenuHover(menu)
+
+        @active[@options.layout_vertical_at + menu.data("yam-level")] = undefined
 
         if menu.hasClass 'yam-horizontal'
           menu.fadeOut @options.hover_animations.out

@@ -2,7 +2,7 @@
 
 files=( \
   lib/jquery.ba-throttle-debounce.min.js \
-  js/yam.js \
+  src/coffee/yam.js \
 )
 
 baseDir=`dirname $0`
@@ -13,16 +13,13 @@ while [ $counter -lt ${#files[@]} ]; do
   let counter=counter+1
 done
 
-if [ -z "$1" ]
-  then
-    minified=yam.js
-  else
-    minified=$1
-fi
+combined=build/yam.js
+minified=build/yam.min.js
 
 if [ -a $minified ]
   then
     rm $minified
 fi
 
-cat ${files[*]} >> $minified
+cat ${files[*]} >> $combined
+uglifyjs $combined >> $minified
