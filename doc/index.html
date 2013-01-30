@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <title>yam.js ★ Yet Another Menu</title>
+
+    <meta charset="utf-8">
+    <meta name="description" content="★ yam.js ★ | Yet Another Menu">
+    <meta name="author" content="Franz Wilding">
+    <link rel="stylesheet" href="css/reset.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="css/main.css" type="text/css" media="screen" />
+
+    <link rel="stylesheet" href="css/shCore.css" type="text/css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="css/shThemeDefault.css" media="screen" />
+
+    <link rel="stylesheet" href="css/yam.css" type="text/css" media="screen" />
+
+    <script type="text/javascript" src="js/modernizr.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>yam.js <span class="meta">0.1</span></h1>
+      <h2>Yet Another Menu</h2>
+
+      <a href="" class="button">Download <span class="meta">Version 0.1, 4kB</span></a>
+      <a href="" class="button">Source <span class="meta">Repo on github</span></a>
+    </header>
+
+    <section>
+      <hr />
+      <h2>Accessible, responsive dropdown menu</h2>
+
+      <article class="left" style="min-height: 400px">
+        <h3>Works with <em>every*</em> device</h3>
+        <p><strong>yam.js</strong> works on every screen resolution and uses <a href="http://modernizr.com/">Modernizr</a> to check, if the device is supporting touch gestures.</p> <p>The lib repositions the submenues on resize, but no worry: <a href="http://benalman.com/projects/jquery-throttle-debounce-plugin/">Ben Alman's debounce-plugin</a> makes sure, no one's CPU is getting killed.</p>
+
+        <p><em>* Ok... I haven't tested it on every device, but there are no special browser-requirements needed.</em></p>
+
+        <aside>
+          <img src="test.png">
+        </aside>
+
+      </article>
+
+      <article class="right" style="min-height: 400px">
+        <h3>Can be used in real life Projects</h3>
+        <p><strong>yam.js</strong> was build for a real life project for a client. If you are using <strong>yam.js</strong>, <a href="mailto:franz@2robots.at">please tell me</a>! Also you can ask for feature-requests or give some general feedback.</p>
+        <p>I've got the lib tested at least on this Browsers:</p>
+
+        <ul>
+          <li>Internet Explorer: <span class="label">7</span> <span class="label">8</span> <span class="label">9</span> <span class="label">10</span></li>
+          <li>Chrome</li>
+          <li>Firefox</li>
+          <li>Safari</li>
+          <li>Opera</li>
+        </ul>
+
+        <aside style="text-align: center;"">
+          <img src="badge.png">
+        </aside>
+
+      </article>
+
+    </section>
+
+
+    <section style="text-align:center;">
+      <hr />
+      <h2>Demo</h2>
+
+      <article class="box">
+
+        <header><h4>Menu without yam.js and styles:</h4></header>
+
+        <div class="content">
+          <ul>
+            <li>
+              <a href="">Start</a>
+            </li>
+
+            <li>
+              <a href="">About us</a>
+              <ul>
+                <li>
+                  <a href="">Who we are</a>
+                  <ul>
+                    <li><a href="">Team</a></li>
+                    <li><a href="">Friends</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="">What we do</a>
+                  <ul>
+                    <li>
+                      <a href="">Web Services</a>
+                      <ul>
+                        <li><a href="">Consulting</a></li>
+                        <li>
+                          <a href="">Development</a>
+                          <ul>
+                            <li><a href="">Drupal</a></li>
+                            <li><a href="">Plain HTML/CSS</a></li>
+                            <li><a href="">App Development</a></li>
+                          </ul>
+                        </li>
+                        <li><a href="">Design</a></li>
+                        <li><a href="">Support</a></li>
+                        <li><a href="">Migrations</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="">Print Services</a></li>
+                    <li><a href="">PR Services</a></li>
+                    <li><a href="">What we've done</a></li>
+                  </ul>
+                </li>
+                <li><a href="">Our story</a></li>
+                <li><a href="">Office</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="">Work</a>
+              <ul>
+                <li><a href="">What clients say</a></li>
+                <li><a href="">Hall of fame</a></li>
+                <li><a href="">Check us out on dribble</a></li>
+              </ul>
+            </li>
+
+            <li>
+              <a href="">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="box">
+
+        <header><h4>Part of the HTML of the menu:</h4></header>
+
+        <div class="content">
+          <pre class="brush: xml">
+&lt;ul id=&quot;demo&quot;&gt;
+  &lt;li&gt;
+    &lt;a href=&quot;&quot;&gt;About us&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;a href=&quot;&quot;&gt;Who we are&lt;/a&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;&quot;&gt;Team&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+          </pre>
+        </div>
+      </article>
+
+      <article class="box">
+
+        <header><h4>Calling yam.js on the menu:</h4></header>
+
+        <div class="content">
+          <pre class="brush: js">
+$(document.ready(function(){
+  $(&quot;#menu&quot;).yam();
+}));
+          </pre>
+        </div>
+      </article>
+
+      <p class="c"></p>
+
+      <h3>The final result (a little bit of css added):</h3>
+
+      <ul id="menu">
+        <li>
+          <a href="">Start</a>
+        </li>
+
+        <li>
+          <a href="">About us</a>
+          <ul>
+            <li>
+              <a href="">Who we are</a>
+              <ul>
+                <li><a href="">Team</a></li>
+                <li><a href="">Friends</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="">What we do</a>
+              <ul>
+                <li>
+                  <a href="">Web Services</a>
+                  <ul>
+                    <li><a href="">Consulting</a></li>
+                    <li>
+                      <a href="">Development</a>
+                      <ul>
+                        <li><a href="">Drupal</a></li>
+                        <li><a href="">Plain HTML/CSS</a></li>
+                        <li><a href="">App Development</a></li>
+                      </ul>
+                    </li>
+                    <li><a href="">Design</a></li>
+                    <li><a href="">Support</a></li>
+                    <li><a href="">Migrations</a></li>
+                  </ul>
+                </li>
+                <li><a href="">Print Services</a></li>
+                <li><a href="">PR Services</a></li>
+                <li><a href="">What we've done</a></li>
+              </ul>
+            </li>
+            <li><a href="">Our story</a></li>
+            <li><a href="">Office</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="">Work</a>
+          <ul>
+            <li><a href="">What clients say</a></li>
+            <li><a href="">Hall of fame</a></li>
+            <li><a href="">Check us out on dribble</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a href="">Contact</a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <hr />
+      <h2>Documentation</h2>
+
+      <p>You can manipulate the way, <strong>yam.js</strong> processes your custom markup and how the menu is displayed. All configurations are passed when calling yam on an object.</p>
+
+      <article class="box">
+
+        <header><h4>Calling yam.js with the following options. (The displayed ones are the default values) :</h4></header>
+
+        <div class="content">
+          <pre class="brush: js">
+$(document.ready(function(){
+  $(&quot;#menu&quot;).yam({
+    hover_delay: 1000,
+    window_min_width: 640,
+    remember_menu_state: false,
+    hover_animations: {
+      "in": 100,
+      "out": 100
+    },
+    layout_vertical_at: 3,
+    selectors: [
+      ['self', '> li'],
+      ['> ul, > ol', '> li']
+    ],
+    callbacks: {
+      mouseenter: null,
+      mouseleave: null,
+      click: null
+    },
+    click_events: 'click, touchend',
+    is_active: function(element) {
+      return element.hasClass('active');
+  });
+}));
+          </pre>
+        </div>
+      </article>
+
+      <article class="box">
+
+        <header><h4>All config options</h4></header>
+
+        <div class="content">
+          <h5>hover_delay</h5>
+
+          <p>The time, the user has to reenter a list element, before it's children will be hidden.</p>
+
+          <hr />
+
+          <h5>window_min_width</h5>
+
+          <p>When the window is smaller then the min_width, the menu will be hidden.</p>
+
+          <hr />
+
+          <h5>remember_menu_state</h5>
+
+          <p>Horizontal menus can be remembered. The last horizontal menu in one level will remain open.</p>
+
+          <hr />
+
+          <h5>hover_animations</h5>
+
+          <p>Set the animation duration for menu display and hide.</p>
+
+          <hr />
+
+          <h5>layout_vertical_at</h5>
+
+          <p>Set the first level for vertical dropdowns. All deeper menu levels will also be vertical.</p>
+
+          <hr />
+
+          <h5>selectors</h5>
+
+          <p>If your markup isn't just a plain list, because your CMS renders crapy code, you can set the selector. Each array entry represents one menu level. All deeper menu levels will use the last selector.</p>
+
+          <hr />
+
+          <h5>callbacks</h5>
+
+          <p>Register your callback function, if the mouse enters, leaves or clicks on an element.</p>
+
+          <hr />
+
+          <h5>click_events</h5>
+
+          <p>Set the events, yam.js should react on.</p>
+
+          <hr />
+
+          <h5>is_active</h5>
+
+          <p>Set the function to check, if an element is active by default.</p>
+
+        </div>
+      </article>
+
+      <p class="c"></p>
+    </section>
+
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/yam.js"></script>
+  <script type="text/javascript" src="js/shCore.js"></script>
+  <script type="text/javascript" src="js/shBrushJScript.js"></script>
+  <script type="text/javascript" src="js/shBrushXML.js"></script>
+  <script type="text/javascript" src="js/shBrushGroovy.js"></script>
+
+  <script type="text/javascript">
+    SyntaxHighlighter.all();
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $("#menu").yam();
+    });
+  </script>
+
+
+  </body>
+</html>

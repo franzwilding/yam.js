@@ -1,0 +1,29 @@
+/* line 3, ../src/scss/yam.scss */
+.yam-horizontal, .yam-vertical {
+  position: absolute;
+}
+
+/* line 7, ../src/scss/yam.scss */
+.yam-horizontal {
+  left: 0;
+  right: 0;
+}
+/* line 10, ../src/scss/yam.scss */
+.yam-horizontal .yam-item {
+  display: inline-block;
+}
+
+/* line 15, ../src/scss/yam.scss */
+.yam-vertical {
+  float: left;
+}
+/* line 17, ../src/scss/yam.scss */
+.yam-vertical .yam-item {
+  display: block;
+}
+
+/* line 22, ../src/scss/yam.scss */
+.yam-menu {
+  position: relative;
+  display: block;
+}
