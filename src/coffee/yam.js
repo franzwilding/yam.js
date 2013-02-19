@@ -60,6 +60,9 @@
           }
           items.each(function(i, item) {
             $(item).addClass('yam-item');
+            if (that.options.is_active($(item))) {
+              $(item).addClass('yam-active');
+            }
             that.manageClick($(item));
             if (that._getLayout(level) === 'vertical') {
               return $(item).css('min-width', that._getElementWidth($(item)));
@@ -135,9 +138,11 @@
         var height, level;
         level = element.data('yam-level');
         if (level !== null) {
-          height = this._getElementHeight(this.menus[level - 1][0]);
-          if (this._getLayout(level) === 'horizontal') {
-            return element.css('top', height);
+          if (this.menus[level - 1][0] !== void 0) {
+            height = this._getElementHeight(this.menus[level - 1][0]);
+            if (this._getLayout(level) === 'horizontal') {
+              return element.css('top', height);
+            }
           }
         }
       };
@@ -178,16 +183,14 @@
         if (Modernizr.touch) {
           element.bind(this.options.click_events, function(event) {
             var data;
-            if (!element.hasClass('yam-active')) {
-              event.preventDefault();
-              data = {
-                obj: that,
-                element: element
-              };
-              that._manageMouseEnter(element, element.find('.yam-horizontal, .yam-vertical').first());
-              element.addClass("yam-active");
-              return $(window).bind(that.options.click_events, data, that.windowClickHandler);
-            }
+            event.preventDefault();
+            data = {
+              obj: that,
+              element: element
+            };
+            that._manageMouseEnter(element, element.find('.yam-horizontal, .yam-vertical').first());
+            element.addClass("yam-active");
+            return $(window).bind(that.options.click_events, data, that.windowClickHandler);
           });
         }
         if ($.isFunction(this.options.callbacks.click)) {

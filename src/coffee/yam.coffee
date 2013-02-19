@@ -76,6 +76,9 @@
         items.each (i, item)->
           $(item).addClass 'yam-item'
 
+          if that.options.is_active($(item))
+            $(item).addClass 'yam-active'
+
           that.manageClick $(item)
 
           if that._getLayout(level) == 'vertical'
@@ -155,9 +158,11 @@
       level = element.data('yam-level')
 
       if level != null
-        height = @_getElementHeight @menus[level-1][0]
-        if (@_getLayout(level) == 'horizontal')
-          element.css 'top', height
+        if @menus[level-1][0] != undefined
+          height = @_getElementHeight @menus[level-1][0]
+
+          if (@_getLayout(level) == 'horizontal')
+            element.css 'top', height
 
     # position vertical-menu next to parent menu
     # first we try to add ourself right to the menu, then left
@@ -206,23 +211,23 @@
       if Modernizr.touch
         element.bind @options.click_events, (event)->
 
-          if !element.hasClass 'yam-active'
-            event.preventDefault()
+          #if !element.hasClass 'yam-active'
+          event.preventDefault()
 
-            data = {
-              obj: that
-              element: element
-            }
+          data = {
+            obj: that
+            element: element
+          }
 
-            # open menu
-            that._manageMouseEnter element, element.find('.yam-horizontal, .yam-vertical').first()
+          # open menu
+          that._manageMouseEnter element, element.find('.yam-horizontal, .yam-vertical').first()
 
-            # add active class
-            element.addClass "yam-active"
+          # add active class
+          element.addClass "yam-active"
 
 
-            # hide menu on window.click
-            $(window).bind that.options.click_events, data, that.windowClickHandler
+          # hide menu on window.click
+          $(window).bind that.options.click_events, data, that.windowClickHandler
 
 
       # call callback

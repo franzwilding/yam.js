@@ -123,7 +123,7 @@
         <li><a href="#">Untermenüpunkt 2</a></li>
       </ul>
     </li>
-    <li><a href="#">Menüpunkt 2</a></li>
+    <li class="active"><a href="#">Menüpunkt 2</a></li>
     <li><a href="#">Menüpunkt 3</a></li>
     <li>
       <a href="#">Menüpunkt 4</a>
@@ -167,7 +167,10 @@
         selectors: [
           ['self', '> li'],
           ['> ol, > ul', '> li']
-        ]
+        ],
+        is_active: function(element) {
+          return (element.hasClass("active") || element.hasClass("active-trail"));
+        }
       });
     });
   </script>
