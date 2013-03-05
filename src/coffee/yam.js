@@ -137,7 +137,7 @@
       YamWrapper.prototype.checkHeightForMenu = function(element) {
         var height, level;
         level = element.data('yam-level');
-        if (level !== null) {
+        if (level !== null && level !== void 0) {
           if (this.menus[level - 1][0] !== void 0) {
             height = this._getElementHeight(this.menus[level - 1][0]);
             if (this._getLayout(level) === 'horizontal') {

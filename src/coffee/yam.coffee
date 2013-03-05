@@ -157,7 +157,7 @@
     checkHeightForMenu: (element)->
       level = element.data('yam-level')
 
-      if level != null
+      if level != null && level != undefined
         if @menus[level-1][0] != undefined
           height = @_getElementHeight @menus[level-1][0]
 
